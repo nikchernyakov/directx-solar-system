@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 #include "BoxObject.h"
+#include "PyramidObject.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -17,5 +18,6 @@ protected:
 
 private:
 	BoxObject* box;
+	PyramidObject* pyramid;
 };
 

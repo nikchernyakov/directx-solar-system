@@ -10,7 +10,7 @@ public:
 
 	void preDraw();
 private:
-	float m_boxSize;
-	float m_rotateDelta;
+	float m_boxSize = 1;
+	float m_rotateDelta = 0;
 };
 

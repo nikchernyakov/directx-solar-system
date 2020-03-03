@@ -6,7 +6,7 @@ class PyramidObject : public GameObject
 {
 
 public:
-	PyramidObject(Game* game, Vertex* vertex);
+	PyramidObject(Game* game, Vector3 position, Vector4 color);
 
 	void preDraw();
 private:

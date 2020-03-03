@@ -4,7 +4,7 @@
 
 using namespace DirectX;
 
-PyramidObject::PyramidObject(Game* game, Vertex* vertex) : GameObject(game, vertex)
+PyramidObject::PyramidObject(Game* game, Vector3 position, Vector4 color) : GameObject(game, position, color)
 {
 
 	// Создание буфера вершин (пять углов пирамиды)

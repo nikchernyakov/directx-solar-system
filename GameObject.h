@@ -12,7 +12,9 @@ class Game;
 class GameObject
 {
 public:
-	GameObject(Game* game, Vertex* vertex);
+	GameObject(Game* game, Vector3 position, Vector4 color);
+	virtual ~GameObject() = default;
+	
 	void init(const std::vector<Vertex>& vertices, const std::vector<unsigned short>& indices);
 
 	virtual void preDraw() = 0;
@@ -35,8 +37,8 @@ protected:
 	ComPtr<ID3D11Buffer> pConstantBuffer;
 	D3D11_SUBRESOURCE_DATA* csd;
 	
-	Vertex* m_startVertex;
-	Vector3 m_positionOffset;
+	Vector3 m_position;
+	Vector4 m_color;
 
 	UINT stride;
 	UINT offset = 0u;

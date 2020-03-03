@@ -6,7 +6,7 @@
 
 using namespace DirectX::SimpleMath;
 
-GameObject::GameObject(Game* game, Vertex* vertex) : m_game(game), m_startVertex(vertex)
+GameObject::GameObject(Game* game, Vector3 position, Vector4 color) : m_game(game), m_position(color), m_color(color)
 {
 	
 }
@@ -79,7 +79,7 @@ void GameObject::init(const std::vector<Vertex>& vertices, const std::vector<uns
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
 		{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"Color", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		{"Color", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 
 	m_game->device->CreateInputLayout(
@@ -131,19 +131,15 @@ void GameObject::draw()
 
 Vector3 GameObject::getPosition()
 {
-	return {
-		m_startVertex->pos.x + m_positionOffset.x,
-		m_startVertex->pos.y + m_positionOffset.y,
-		m_startVertex->pos.z + m_positionOffset.z,
-	};
+	return m_position;
 }
 
 void GameObject::setPosition(Vector3 pos)
 {
-	m_positionOffset = pos - m_startVertex->pos;
+	m_position = pos;
 }
 
 void GameObject::addPosition(Vector3 pos)
 {
-	m_positionOffset += pos;
+	m_position += pos;
 }

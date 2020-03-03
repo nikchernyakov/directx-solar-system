@@ -8,10 +8,10 @@ class Vertex
 {
 public:
 	Vector3 pos;
-	Color color;
+	Vector4 color;
 public:
 	Vertex() = default;
-	Vertex(Vector3 p, Color c) : pos(p), color(c) {
+	Vertex(Vector3 p, Vector4 c) : pos(p), color(c) {
 		
 	}
 	Vertex operator+(Vertex const v) {

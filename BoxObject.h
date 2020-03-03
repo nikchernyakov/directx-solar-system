@@ -6,7 +6,7 @@ class BoxObject : public GameObject
 {
 
 public:
-	BoxObject(Game* game, Vertex* vertex, float boxSize);
+	BoxObject(Game* game, Vector3 position, Vector4 color, float boxSize);
 
 	void preDraw();
 private:

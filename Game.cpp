@@ -29,7 +29,7 @@ void Game::update()
 
 void Game::render()
 {
-	float color[] = { 0.0f, 0.0f, 0.2f, 0.0f };
+	float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	context->ClearRenderTargetView(rtv, color);
 
 	annotation->BeginEvent(L"BeginDraw");

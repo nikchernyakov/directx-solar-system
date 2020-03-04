@@ -1,6 +1,5 @@
 #pragma once
 
-#include <d3d11.h>
 #include "SimpleMath.h"
 #include "Transform.h"
 
@@ -10,7 +9,7 @@ using namespace DirectX::SimpleMath;
 class Camera
 {
 public:
-	Camera(Game* game, Vector3 position);
+	Camera(Game* game, Vector3 position, Vector3 direction);
 	~Camera();
 
 	Matrix getViewMatrix();
@@ -22,10 +21,12 @@ public:
 private:
 	Transform transform;
 
+	Vector3 direction;
+
 	float yaw = 0;
 	float pitch = 0;
 
-	float rotationSpeed = 0.05;
+	float rotationSpeed = 0.5;
 	float moveSpeed = 0.1;
 	
 	Matrix projectionMatrix;

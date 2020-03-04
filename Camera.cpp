@@ -2,12 +2,12 @@
 #include "Camera.h"
 #include "GameMath.h"
 
-Camera::Camera(Game* game, Vector3 position)
+Camera::Camera(Game* game, Vector3 position, Vector3 direction) : direction(direction)
 {
 	transform.setPosition(position);
 
 	projectionMatrix = Matrix::CreatePerspectiveFieldOfView(
-		60, static_cast<float>(game->screenWidth) / static_cast<float>(game->screenHeight),
+		120, static_cast<float>(game->screenWidth) / static_cast<float>(game->screenHeight),
 		0.01f, 100.0f);
 }
 
@@ -17,8 +17,8 @@ Camera::~Camera()
 
 Matrix Camera::getViewMatrix()
 {
-	Vector3 target = { 0, 2, 2 };
-	target.Transform(target, Matrix::CreateFromYawPitchRoll(yaw, pitch, 0));
+	Vector3 target = { direction };
+	direction.Transform(direction, Matrix::CreateFromYawPitchRoll(yaw, pitch, 0), target);
 	target += transform.getPosition();
 	Vector3 up = { 0, -1, 0 };
 	return Matrix::CreateLookAt(transform.getPosition(), target, up);
@@ -32,7 +32,7 @@ Matrix Camera::getProjectionMatrix() const
 void Camera::rotate(float dx, float dy)
 {
 	yaw = wrap_angle(yaw + dx * rotationSpeed);
-	pitch = clamp(pitch + dy * rotationSpeed, 0.995f * -DirectX::XM_PIDIV2, 0.995f * -DirectX::XM_PIDIV2);
+	pitch = clamp(pitch + dy * rotationSpeed, 0.995f * -DirectX::XM_PIDIV2, 0.995f * DirectX::XM_PIDIV2);
 }
 
 void Camera::translate(Vector3 translation)

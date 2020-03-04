@@ -3,6 +3,7 @@
 #include "SimpleMath.h"
 #include "Vertex.h"
 #include <wrl/client.h>
+#include "Transform.h"
 
 using namespace Microsoft::WRL;
 using namespace DirectX::SimpleMath;
@@ -20,9 +21,7 @@ public:
 	virtual void preDraw() = 0;
 	void draw();
 
-	Vector3 getPosition();
-	void setPosition(Vector3 pos);
-	void addPosition(Vector3 pos);
+	Transform transform;
 	
 protected:
 	Game* m_game;
@@ -37,7 +36,6 @@ protected:
 	ComPtr<ID3D11Buffer> pConstantBuffer;
 	D3D11_SUBRESOURCE_DATA* csd;
 	
-	Vector3 m_position;
 	Vector4 m_color;
 
 	UINT stride;

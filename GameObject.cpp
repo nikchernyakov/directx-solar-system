@@ -1,14 +1,14 @@
 #include <d3dcompiler.h>
 #include "Game.h"
-#include "GameObject.h"
 #include "SimpleMath.h"
+#include "GameObject.h"
 #include "ConstantBuffer.h"
 
 using namespace DirectX::SimpleMath;
 
-GameObject::GameObject(Game* game, Vector3 position, Vector4 color) : m_game(game), m_position(color), m_color(color)
+GameObject::GameObject(Game* game, Vector3 position, Vector4 color) : m_game(game), m_color(color)
 {
-	
+	transform = { position };
 }
 
 void GameObject::init(const std::vector<Vertex>& vertices, const std::vector<unsigned short>& indices)
@@ -127,19 +127,4 @@ void GameObject::draw()
 	m_game->context->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf());
 
 	m_game->context->DrawIndexed(indicesCount, 0u, 0u);
-}
-
-Vector3 GameObject::getPosition()
-{
-	return m_position;
-}
-
-void GameObject::setPosition(Vector3 pos)
-{
-	m_position = pos;
-}
-
-void GameObject::addPosition(Vector3 pos)
-{
-	m_position += pos;
 }

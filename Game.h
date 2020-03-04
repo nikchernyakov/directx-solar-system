@@ -2,6 +2,7 @@
 #include <d3d11_1.h>
 #include "InputDevice.h"
 #include "SimpleMath.h"
+#include "Camera.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -31,9 +32,7 @@ public:
 	
 	void doFrame();
 
-	Matrix gWorld;
-	Matrix gView;
-	Matrix gProjection;
+	Camera* camera;
 	
 protected:
 	virtual void update();

@@ -82,14 +82,14 @@ BoxObject::BoxObject(Game* game, Vector3 position, Vector4 color, float boxSize)
 void BoxObject::preDraw()
 {
 	m_rotateDelta += static_cast<float>(DirectX::XM_PI) * m_game->deltaTime;
-	
+	//Matrix mWorld = ;
+	//mWorld.Translation(transform.getPosition());
 	const ConstantBuffer cb =
 	{
-		{
-			Matrix::CreateRotationY(m_rotateDelta).Transpose()
-		},
-		m_game->gView.Transpose(),
-		m_game->gProjection.Transpose(),
+		//mWorld.Transpose(),
+		Matrix::CreateRotationY(m_rotateDelta).Transpose(),
+		m_game->camera->getViewMatrix().Transpose(),
+		m_game->camera->getProjectionMatrix().Transpose(),
 	};
 	m_game->context->UpdateSubresource(pConstantBuffer.Get(), 0, NULL, &cb, 0, 0);
 }

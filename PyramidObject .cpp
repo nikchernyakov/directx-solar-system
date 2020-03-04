@@ -45,8 +45,8 @@ void PyramidObject::preDraw()
 		{
 			Matrix::CreateRotationY(m_rotateDelta).Transpose()
 		},
-		m_game->gView.Transpose(),
-		m_game->gProjection.Transpose(),
+		m_game->camera->getViewMatrix().Transpose(),
+		m_game->camera->getProjectionMatrix(),
 	};
 	m_game->context->UpdateSubresource(pConstantBuffer.Get(), 0, NULL, &cb, 0, 0);
 }

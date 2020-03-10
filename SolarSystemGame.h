@@ -17,7 +17,9 @@ protected:
 	void drawObjects();
 
 private:
-	BoxObject* box;
+	BoxObject* box1;
+	BoxObject* box2;
+	BoxObject* box3;
 	PyramidObject* pyramid;
 };
 

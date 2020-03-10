@@ -21,7 +21,7 @@ public:
 	virtual void preDraw() = 0;
 	void draw();
 
-	Transform transform;
+	Transform* transform;
 	
 protected:
 	Game* m_game;

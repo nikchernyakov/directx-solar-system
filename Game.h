@@ -28,6 +28,8 @@ public:
 	IDXGISwapChain* swapChain;
 	ID3D11RenderTargetView* rtv;
 	ID3DUserDefinedAnnotation* annotation;
+	ID3D11Texture2D* depthStencil = NULL;             // Текстура буфера глубин
+	ID3D11DepthStencilView* depthStencilView = NULL;          // Объект вида, буфер глубин
 
 	InputDevice* inputDevice;
 	Mouse* mouse;

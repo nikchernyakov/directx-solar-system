@@ -33,6 +33,7 @@ void Game::render()
 {
 	float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	context->ClearRenderTargetView(rtv, color);
+	context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	annotation->BeginEvent(L"BeginDraw");
 	drawObjects();

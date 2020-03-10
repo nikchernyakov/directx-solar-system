@@ -376,6 +376,32 @@ int WINAPI main(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, in
 
 	game->context->RSSetState(rastState);
 
+	D3D11_TEXTURE2D_DESC descDepth;     // Структура с параметрами
+	ZeroMemory(&descDepth, sizeof(descDepth));
+	descDepth.Width = game->screenWidth;            // ширина и
+	descDepth.Height = game->screenHeight;    // высота текстуры
+	descDepth.MipLevels = 1;            // уровень интерполяции
+	descDepth.ArraySize = 1;
+	descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // формат (размер пикселя)
+	descDepth.SampleDesc.Count = 1;
+	descDepth.SampleDesc.Quality = 0;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;         // вид - буфер глубин
+	descDepth.CPUAccessFlags = 0;
+	descDepth.MiscFlags = 0;
+
+	// При помощи заполненной структуры-описания создаем объект текстуры
+	game->device->CreateTexture2D(&descDepth, NULL, &game->depthStencil);
+
+	// Теперь надо создать сам объект буфера глубин
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;            // Структура с параметрами
+	ZeroMemory(&descDSV, sizeof(descDSV));
+	descDSV.Format = descDepth.Format;         // формат как в текстуре
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Texture2D.MipSlice = 0;
+	// При помощи заполненной структуры-описания и текстуры создаем объект буфера глубин
+	game->device->CreateDepthStencilView(game->depthStencil, &descDSV, &game->depthStencilView);
+
 
 	D3D11_VIEWPORT viewport = {};
 	viewport.Width = game->screenWidth;
@@ -386,7 +412,7 @@ int WINAPI main(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, in
 	viewport.MaxDepth = 1.0f;
 
 	game->context->RSSetViewports(1, &viewport);
-	game->context->OMSetRenderTargets(1, &game->rtv, nullptr);
+	game->context->OMSetRenderTargets(1, &game->rtv, game->depthStencilView);
 
 #pragma endregion DirectX initialization
 

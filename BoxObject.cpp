@@ -2,8 +2,8 @@
 #include "BoxObject.h"
 #include "ConstantBuffer.h"
 
-BoxObject::BoxObject(Game* game, Vector3 position, Vector4 color, float boxSize)
-	: GameObject(game, position, color), m_boxSize(boxSize)
+BoxObject::BoxObject(Game* game, Vector3 position, Vector4 color, float boxSize, float boxSpeed)
+	: GameObject(game, position, color), m_boxSize(boxSize), m_boxSpeed(boxSpeed)
 {
 	const std::vector<Vertex> vertices =
 	{
@@ -81,13 +81,13 @@ BoxObject::BoxObject(Game* game, Vector3 position, Vector4 color, float boxSize)
 
 void BoxObject::preDraw()
 {
-	m_rotateDelta += static_cast<float>(DirectX::XM_PI) * m_game->deltaTime;
-	transform.rotate(Vector3::UnitY, m_rotateDelta);
+	m_rotateDelta += static_cast<float>(DirectX::XM_PI) * m_game->deltaTime * m_boxSpeed;
+	transform->rotate(Vector3::UnitY, m_rotateDelta);
 
 	// Update Constant Buffer
 	const ConstantBuffer cb =
 	{
-		transform.CreateWorldMatrix().Transpose(),
+		transform->CreateWorldMatrix().Transpose(),
 		m_game->camera->getViewMatrix().Transpose(),
 		m_game->camera->getProjectionMatrix().Transpose(),
 	};

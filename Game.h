@@ -3,6 +3,7 @@
 #include "InputDevice.h"
 #include "SimpleMath.h"
 #include "Camera.h"
+#include "Mouse.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -29,6 +30,7 @@ public:
 	ID3DUserDefinedAnnotation* annotation;
 
 	InputDevice* inputDevice;
+	Mouse* mouse;
 	
 	void doFrame();
 

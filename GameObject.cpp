@@ -8,7 +8,7 @@ using namespace DirectX::SimpleMath;
 
 GameObject::GameObject(Game* game, Vector3 position, Vector4 color) : m_game(game), m_color(color)
 {
-	transform = { position };
+	transform.setPosition(position);
 }
 
 void GameObject::init(const std::vector<Vertex>& vertices, const std::vector<unsigned short>& indices)

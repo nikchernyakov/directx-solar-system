@@ -95,9 +95,37 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 
 	case WM_LBUTTONDOWN:
 	{
-		return 0;
+		break;
 	}
+	case WM_MOUSEMOVE:
+	{
+		int x = LOWORD(lparam);
+		int y = HIWORD(lparam);
+		game->mouse->OnMouseMove(x, y);
+		break;
+	}
+	/************** RAW MOUSE MESSAGES **************/
+	case WM_INPUT:
+	{
+		UINT dataSize;
+		GetRawInputData(reinterpret_cast<HRAWINPUT>(lparam), RID_INPUT, NULL, &dataSize, sizeof(RAWINPUTHEADER)); //Need to populate data size first
 
+		if (dataSize > 0)
+		{
+			std::unique_ptr<BYTE[]> rawdata = std::make_unique<BYTE[]>(dataSize);
+			if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lparam), RID_INPUT, rawdata.get(), &dataSize, sizeof(RAWINPUTHEADER)) == dataSize)
+			{
+				RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(rawdata.get());
+				if (raw->header.dwType == RIM_TYPEMOUSE)
+				{
+					game->mouse->OnRawDelta(raw->data.mouse.lLastX, raw->data.mouse.lLastY);
+				}
+			}
+		}
+
+		return DefWindowProc(hwnd, umessage, wparam, lparam); //Need to call DefWindowProc for WM_INPUT messages
+	}
+	/************** END RAW MOUSE MESSAGES **************/
 	// All other messages pass to the message handler in the system class.
 	default:
 	{
@@ -169,12 +197,31 @@ int WINAPI main(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, in
 		windowRect.bottom - windowRect.top,
 		nullptr, nullptr, hInstance, nullptr);
 
+	static bool raw_input_initialized = false;
+	if (raw_input_initialized == false)
+	{
+		RAWINPUTDEVICE rid;
+
+		rid.usUsagePage = 0x01; //Mouse
+		rid.usUsage = 0x02;
+		rid.dwFlags = 0;
+		rid.hwndTarget = NULL;
+
+		if (RegisterRawInputDevices(&rid, 1, sizeof(rid)) == FALSE)
+		{
+			std::cout << "Failed to register raw input devices.\n";
+			exit(-1);
+		}
+
+		raw_input_initialized = true;
+	}
+
 
 	ShowWindow(game->hWnd, SW_SHOW);
 	SetForegroundWindow(game->hWnd);
 	SetFocus(game->hWnd);
 
-	ShowCursor(true);
+	ShowCursor(false);
 
 #pragma endregion Window Initialization
 

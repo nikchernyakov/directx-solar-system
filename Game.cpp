@@ -4,6 +4,8 @@
 Game::Game()
 {
 	inputDevice = new InputDevice();
+	mouse = new Mouse();
+	mouse->EnableRaw();
 }
 
 Game::~Game()

@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Camera.h"
 #include "GameMath.h"
+#include <iostream>
 
 Camera::Camera(Game* game, Vector3 position, Vector3 direction) : direction(direction)
 {

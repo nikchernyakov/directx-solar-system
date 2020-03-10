@@ -26,8 +26,8 @@ private:
 	float yaw = 0;
 	float pitch = 0;
 
-	float rotationSpeed = 0.5;
-	float moveSpeed = 0.1;
+	float rotationSpeed = 0.05;
+	float moveSpeed = 5;
 	
 	Matrix projectionMatrix;
 	

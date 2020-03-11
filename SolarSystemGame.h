@@ -20,6 +20,7 @@ private:
 	BoxObject* box1;
 	BoxObject* box2;
 	BoxObject* box3;
+	BoxObject* box4;
 	PyramidObject* pyramid;
 };
 

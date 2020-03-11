@@ -50,7 +50,8 @@ Matrix Transform::CreateWorldMatrix() const
 
 	if (parent)
 	{
-		mat = mat * parent->CreateWorldMatrix();
+		auto parMat = parent->CreateWorldMatrix();
+		mat = mat * Matrix::CreateTranslation(parMat.Translation());
 	}
 
 	return mat;
